@@ -6,4 +6,6 @@ deploy:
   on:
     repo: hypoport/hypoport-game
 
-script: true
+language: node_js
+node_js:
+- "0.10"
