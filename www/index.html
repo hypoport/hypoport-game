@@ -1,40 +1,78 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
 
-        <title>hello hypo phaser!</title>
+<head>
+    <meta charset="UTF-8" />
 
-        <link  rel="stylesheet/less" type="text/css" href="css/game-style.less"/>
+    <title>hello hypo phaser!</title>
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.1.0/less.min.js"></script>
-        <script src="phaser.min.js"></script>
-    </head>
-    <body>
+    <link rel="stylesheet/less" type="text/css" href="css/game-style.less" />
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.1.0/less.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="phaser.min.js"></script>
+    <script src="angebote.js"></script>
+
+
+</head>
+
+<body>
 
     <script type="text/javascript">
+        window.onload = function() {
+            var angeboteJS = [];
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+                preload: preload,
+                create: create
+            });
 
-    window.onload = function() {
 
-        var game = new Phaser.Game(1800, 900, Phaser.AUTO, '', { preload: preload, create: create });
 
-        function preload () {
-            // hello c9 =)
-            game.load.image('logo', 'phaser.png');
+            function preload() {
+                game.load.image('logo', 'phaser.png');
+                game.load.image('angebot_bg', 'img/angebot_bg.png');
+            }
 
-        }
+            function create() {
 
-        function create () {
+                game.physics.startSystem(Phaser.Physics.ARCADE);
 
-            var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-            logo.anchor.setTo(0.5, 0.5);
+                for (var i = 0; i < angebote.length; i++) {
+                    var angebot = createAngebot(40, 40 + i * 80, "Zins:" + angebote[i].zins);
+                    game.physics.arcade.enable(angebot);
+                    console.log(angebot);
+                    angebot.body.bounce.y = 0.6;
+                    angebot.body.gravity.y = 300;
+                    angebot.body.collideWorldBounds = true;
 
-            game.add.text(10, 10, 'Hello Hypoport', { fontSize: '32px', fill: '#00FAA4' });
+                }
 
-        }
-    };
-    
+            }
+
+            function createAngebot(x, y, text) {
+                //var angebot = game.add.group();
+                
+                var angebot = game.add.sprite(x,y, 'angebot_bg');
+                
+                var text = game.add.text(x+5, y+5, text, {
+                    fontSize: '32px',
+                    fill: '#00FAA4'
+                });
+                //angeboteJS.push({
+                //    angebot: angebot,
+                 //   text:text,
+                  //  update:function(){
+            //            this.text.x = this.angebot.x+5;
+             //       }
+              //  })
+            //    angebot.onPos
+                
+                
+                return angebot;
+            }
+        };
     </script>
 
-    </body>
+</body>
+
 </html>
