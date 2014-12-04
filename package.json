@@ -19,6 +19,7 @@
     "npm": "1.4.x"
   },
   "scripts": {
+    "build": "node ./node_modules/grunt-cli/bin/grunt build",
     "test": "node ./node_modules/grunt-cli/bin/grunt test"
   }
 }
