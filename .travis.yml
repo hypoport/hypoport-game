@@ -1,0 +1,7 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: aeWFXHCm39Evdm+Dy6Q9he0cSiAT8iNDgqeXOHIK8tZPjNGhM4wcCWnc4AQN05U05+0JDX/9qmM/k6P391Opk4mFg7leaoE4iOjYZY1rTk5WxATa6sRX2jTh/4zX0KilXEAJCXtzHT2Fufz0CB2+9jxKrVKVobwV64bYLyGaoK4=
+  app: hypoport-game
+  on:
+    repo: hypoport/hypoport-game
