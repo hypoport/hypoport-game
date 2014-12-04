@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
 
   <title>hello hypo phaser!</title>
 
-  <link rel="stylesheet" type="text/css" href="css/game-style.css" />
+  <link rel="stylesheet" type="text/css" href="css/game-style.css"/>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/phaser.min.js"></script>
   <script src="js/angebote.js"></script>
@@ -15,68 +15,72 @@
 
 <body>
 
-  <script type="text/javascript">
-    window.onload = function() {
-      var angeboteJS = [];
-      var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
-        preload: preload,
-        create: create,
-        update: update
+<script type="text/javascript">
+  window.onload = function () {
+    var angeboteSprites;
+    var angeboteJS = [];
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+      preload: preload,
+      create: create,
+      update: update
+    });
+
+    function preload() {
+      game.load.image('logo', 'phaser.png');
+      game.load.image('angebot_bg', 'img/angebot_bg.png');
+    }
+
+    function create() {
+
+      game.physics.startSystem(Phaser.Physics.ARCADE);
+      angeboteSprites = game.add.group();
+
+      for (var i = 0; i < angebote.length; i++) {
+        var angebot = createAngebot(40, 40 + i * 80, "Zins:" + angebote[i].zins);
+        game.physics.arcade.enable(angebot);
+        angebot.body.bounce.y = 0.6;
+        angebot.body.gravity.y = 300;
+        angebot.body.collideWorldBounds = true;
+
+      }
+      angeboteSprites.setAll('body.collideWorldBounds', true);
+      angeboteSprites.setAll('body.bounce.y', .6);
+      angeboteSprites.setAll('body.gravity.y', 300);
+      angeboteSprites.setAll('body.minBounceVelocity', 10);
+    }
+
+    function update() {
+      game.physics.arcade.collide(angeboteSprites);
+      angeboteJS.forEach(function (angebotJS) {
+
+        angebotJS.update();
+      })
+    }
+
+    function createAngebot(x, y, text) {
+      //var angebot = game.add.group();
+
+      var angebot = angeboteSprites.create(x, y, 'angebot_bg');
+
+      var text = game.add.text(0, 0, text, {
+        fontSize: '32px',
+        fill: '#00FAA4'
       });
+      var position = angeboteJS.length;
+      angeboteJS.push({
+                        angebot: angebot,
+                        text: text,
+                        update: function () {
+                          this.text.x = this.angebot.x + 5;
+                          this.text.y = this.angebot.y + 5;
+                          //angeboteJS[position].text.y = angeboteJS[position].yangebot.x + 5;
+                        }
+                      })
 
-      function preload() {
-        game.load.image('logo', 'phaser.png');
-        game.load.image('angebot_bg', 'img/angebot_bg.png');
-      }
-
-      function create() {
-
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        for (var i = 0; i < angebote.length; i++) {
-          var angebot = createAngebot(40, 40 + i * 80, "Zins:" + angebote[i].zins);
-          game.physics.arcade.enable(angebot);
-          console.log(angebot);
-          angebot.body.bounce.y = 0.6;
-          angebot.body.gravity.y = 300;
-          angebot.body.collideWorldBounds = true;
-
-        }
-
-      }
-      
-      function update(){
-        angeboteJS.forEach(function(angebotJS){
-        
-          angebotJS.update();
-        }) 
-      }
-
-      function createAngebot(x, y, text) {
-        //var angebot = game.add.group();
-
-        var angebot = game.add.sprite(x, y, 'angebot_bg');
-
-        var text = game.add.text(0,0, text, {
-          fontSize: '32px',
-          fill: '#00FAA4'
-        });
-        var position = angeboteJS.length;
-        angeboteJS.push({
-          angebot: angebot,
-          text: text,
-          update: function() {
-            this.text.x = this.angebot.x +5;
-            this.text.y = this.angebot.y +5;
-            //angeboteJS[position].text.y = angeboteJS[position].yangebot.x + 5;
-          }
-        })
-
-
-        return angebot;
-      }
-    };
-  </script>
+      return angebot;
+    }
+  };
+</script>
 
 </body>
 
