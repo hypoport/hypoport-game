@@ -49,6 +49,15 @@
     var element = createBox(angebot, this);
     element.classList.add("box");
     angebot.element = element;
+    element.classList.add("new");
+    setTimeout(function () {
+      element.classList.remove("new");
+      element.classList.add("dropping");
+      setTimeout(function () {
+        element.classList.remove("dropping");
+      },800);
+
+    });
     stackElement.insertBefore(element, stackElement.children[0]);
   });
   gameLogic.onAngebotRemoved(function (angebot, index) {
@@ -59,7 +68,6 @@
     }, 300)
   });
   gameLogic.onUpdated(function () {
-    console.log("update: " + this.score);
     scoreBox.textContent = this.score;
   });
 

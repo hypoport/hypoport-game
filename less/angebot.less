@@ -79,28 +79,13 @@ label {
       width: @box-width;
 
       text-align: center;
-      transition: top 0.2s ease-out;
       border: @border-width solid steelblue;
       border-radius: 8px;
       padding: 4px 16px;
       background: lightsteelblue;
 
-      > * {
-        margin: auto 2px;
-        vertical-align: top;
-        line-height: 22px;
-        font-size: 15px;
+      transition: top 0.2s ease-out;
 
-      }
-      > h2 {
-        border-bottom: 2px solid #dae5f2;
-        margin-bottom: 4px;
-      }
-      > .status {
-        position: absolute;
-        top: 4px;
-        left: 16px;
-      }
       &.remove > label,
       &.remove {
         left: 150%;
@@ -112,13 +97,16 @@ label {
         left .3s cubic-bezier(.62, .08, .84, .62),
         top .2s ease-out, opacity .2s ease-out .1s !important;
       }
-      &:nth-last-child(6) {
-        top: -300px;
+      &.new {
+        opacity: 0 !important;
+        top: -300px !important;
+      }
+      &.dropping {
+        transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
       }
       &:nth-last-child(5) {
         opacity: 1;
         top: -@box-height - @box-spacing - @border-width;
-        transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
       }
       &:nth-last-child(4) {
         opacity: 1;
@@ -136,6 +124,23 @@ label {
         opacity: 1;
         top: 3*@box-height + 4*@box-spacing;
       }
+
+      > * {
+        margin: auto 2px;
+        vertical-align: top;
+        line-height: 22px;
+        font-size: 15px;
+
+      }
+      > h2 {
+        border-bottom: 2px solid #dae5f2;
+        margin-bottom: 4px;
+      }
+      > .status {
+        position: absolute;
+        top: 4px;
+        left: 16px;
+      }
     }
 
   }
@@ -144,7 +149,7 @@ label {
     box-sizing: content-box;
 
     left: @box-width + 40px;
-    top: 300px;
+    top: 336px;
 
     &.final {
       top: 50vh;
@@ -154,14 +159,13 @@ label {
       line-height: 60px;
       font-size: 48px;
 
-      transition: left .4s linear, top .4s linear, right .4s linear, bottom .4s linear, margin .4s linear, width .4s linear, height .4s linear, line-height .4s linear, font-size .4s linear;
+      transition: .2s linear;
     }
 
     //      margin: auto;
 
     height: 30px;
     width: 80px;
-
 
     border: @border-width solid #555;
     border-radius: @border-width;
