@@ -5,82 +5,31 @@
   </style>
   <script type="text/javascript" src="js/Angebot.js"></script>
   <script type="text/javascript" src="js/GameLogic.js"></script>
-  <script type="text/javascript">
-    const gameLogic = new hypoport.game.GameLogic();
-    gameLogic.angebotAdded(function (angebot, index) {
-      
-    });
-    function removeBox(box) {
-      box.classList.toggle('remove');
-      setTimeout(function () {
-        box.parentNode.removeChild(box)
-      }, 300)
-    }
-  </script>
   <link rel="stylesheet" href="css/angebot.css">
 </head>
 <body style="background: black">
 <div class="stack">
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>A</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>9</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>8</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>7</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>2Jahre</span></label>
-    <label title="#"><span>6</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status rot"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>5</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status gruen"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>4</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status gelb"></div>
-    <label title="Zins"><span>18%</span></label>|
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>3</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status gelb"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>2</span></label>
-  </div>
-  <div class="box" onclick="removeBox(this)">
-    <div class="status gelb"></div>
-    <label title="Zins"><span>18%</span></label>
-    <label title="Zinsbindung"><span>20Jahre</span></label>
-    <label title="#"><span>1</span></label>
-  </div>
 </div>
+<script type="text/javascript">
+  var gameLogic = new hypoport.game.GameLogic();
+  var stackElement = document.querySelector('.stack');
+  gameLogic.onAngebotAdded(function (angebot, index) {
+    const element = document.createElement('div');
+    element.classList.add("box");
+    angebot.element = element;
+    stackElement.insertBefore(element, stackElement.children[0]);
+  });
+  function removeBox(box) {
+    box.classList.toggle('remove');
+    setTimeout(function () {
+      box.parentNode.removeChild(box)
+    }, 300)
+  }
+  gameLogic.onAngebotRemoved(function (angebot, index) {
+    removeBox(angebot.element);
+    console.log(this);
+  });
+  gameLogic.startEventLoop();
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@ module hypoport.game {
         angebotRemoved = [];
         gameFinished = [];
         counter:number = 0;
+        forceRemove:boolean = false;
 
         gameLoop;
 
@@ -14,12 +15,11 @@ module hypoport.game {
         }
 
         public startEventLoop() {
-            var forceRemove:boolean = false;
             clearInterval(this.gameLoop);
             this.gameLoop = setInterval(() => {
                 if (this.counter < GameLogic.MAX_ITERATIONS) {
                     ++this.counter;
-                    if (forceRemove && this.stack.length > 4) {
+                    if (this.forceRemove && this.stack.length > 4) {
                         this.doRemoveAt(4);
                     }
                     var angebot = this.generator.createRandomAngebot();
@@ -27,7 +27,7 @@ module hypoport.game {
                     this.angebotAdded.forEach((handler)=> {
                         handler.call(this, angebot, this.stack.length - 1);
                     });
-                    forceRemove = true;
+                    this.forceRemove = true;
                 }
                 else {
                     window.clearInterval(this.gameLoop);
@@ -60,6 +60,7 @@ module hypoport.game {
             this.angebotRemoved.forEach((handler) => {
                 handler.call(this, angebot, this.stack.length - 1);
             });
+            this.forceRemove = false;
         }
 
         public indexOf(angebot) {
