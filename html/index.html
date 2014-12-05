@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
 
   <title>hello hypo phaser!</title>
 
-  <link rel="stylesheet" type="text/css" href="css/game-style.css" />
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/game-style.css"/>
+  <script src="js/jquery-2.1.1.min.js"></script>
   <script src="js/phaser.min.js"></script>
   <script src="js/angebote.js"></script>
 
@@ -15,6 +15,7 @@
 
 <body>
 
+<<<<<<< HEAD
   <script type="text/javascript">
     window.onload = function() {
       var angeboteJS = [];
@@ -80,6 +81,71 @@
       }
     };
   </script>
+=======
+<script type="text/javascript">
+  window.onload = function () {
+    var angeboteSprites;
+    var angeboteJS = [];
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+      preload: preload,
+      create: create,
+      update: update
+    });
+
+    function preload() {
+      game.load.image('angebot_bg', 'img/angebot_bg.png');
+    }
+
+    function create() {
+
+      game.physics.startSystem(Phaser.Physics.ARCADE);
+      game.physics.arcade.checkCollision = {up: true, down: true, left: false, right: false};
+      angeboteSprites = game.add.group();
+
+      for (var i = 0; i < angebote.length; i++) {
+        var angebot = createAngebot(40, 40 + i * 80, "Zins:" + angebote[i].zins);
+        angebot.inputEnabled = true;
+        angebot.input.enableDrag();
+        game.physics.arcade.enable(angebot);
+      }
+      angeboteSprites.setAll('body.collideWorldBounds', true);
+      angeboteSprites.setAll('body.bounce.y', .6);
+      angeboteSprites.setAll('body.gravity.y', 300);
+      angeboteSprites.setAll('body.minBounceVelocity', 10);
+      angeboteSprites.setAll('inputEnabled', true);
+      angeboteSprites.setAll('input.enableDrag', true);
+    }
+
+    function update() {
+      game.physics.arcade.collide(angeboteSprites);
+      angeboteJS.forEach(function (angebotJS) {
+
+        angebotJS.update();
+      })
+    }
+
+    function createAngebot(x, y, text) {
+      var angebot = angeboteSprites.create(x, y, 'angebot_bg');
+
+      var text = game.add.text(0, 0, text, {
+        fontSize: '32px',
+        fill: '#00FAA4'
+      });
+      var position = angeboteJS.length;
+      angeboteJS.push({
+                        angebot: angebot,
+                        text: text,
+                        update: function () {
+                          this.text.x = this.angebot.x + 5;
+                          this.text.y = this.angebot.y + 5;
+                        }
+                      })
+
+      return angebot;
+    }
+  };
+</script>
+>>>>>>> f0b0fbf64398805dbb55afd748f62e4ddf678269
 
 </body>
 
