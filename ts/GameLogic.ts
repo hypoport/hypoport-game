@@ -47,6 +47,10 @@ module hypoport.game {
             this.gameFinished.push(handler);
         }
 
+        public doRemove(angebot:Angebot) {
+            this.doRemove(indexOf.call(this, angebot));
+        }
+
         public doRemove(index:number) {
             var angebot = this.stack[4];
             this.stack.splice(4, 1);
@@ -55,8 +59,8 @@ module hypoport.game {
             });
         }
 
-        public doRemove(angebot:Angebot) {
-            this.doRemove(this.stack.indexOf(angebot));
+        public indexOf(angebot) {
+            return this.stack.indexOf(angebot);
         }
 
         public get score():number {
