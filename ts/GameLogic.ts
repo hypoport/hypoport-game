@@ -19,11 +19,14 @@ module hypoport.game {
             this.gameLoop = setInterval(() => {
                 if (this.counter < GameLogic.MAX_ITERATIONS) {
                     ++this.counter;
-                    var angebot = this.generator.createRandomAngebot();
-                    this.stack.push(angebot);
                     if (forceRemove && this.stack.length > 4) {
                         this.doRemove(4)
                     }
+                    var angebot = this.generator.createRandomAngebot();
+                    this.stack.push(angebot);
+                    this.angebotAdded.forEach(function (handler) {
+                        handler.call(this, angebot, this.stack.length - 1);
+                    });
                     forceRemove = true;
                 }
                 else {
