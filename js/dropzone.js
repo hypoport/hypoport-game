@@ -6,7 +6,7 @@ var DropZone = {
   },
   
   addPhysics: function(dropZone) {
-    game.physics.arcade.enable(dropZone);
+    game.physics.aracde.enable(dropZone);
     dropZone.body.immovable = true;
   },
 
