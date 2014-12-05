@@ -5,10 +5,15 @@ module hypoport.game {
         rot
     }
 
+    export var Bezeichner:string[] = [
+        "Castle Finance", "Hausbank", "Mobilefin"
+    ];
+
     export class Angebot {
         public zins:number;
         public bindung:number;
         public betrag:number;
+        public bezeichner:string;
         public machbarkeit:Machbarkeit;
 
         public zinsString() {
@@ -40,6 +45,7 @@ module hypoport.game {
             angebot.zins = AngebotGenerator.createRandomInteger(AngebotGenerator.ZINS_BASE, AngebotGenerator.ZINS_VARIANCE) / 100;
             angebot.bindung = AngebotGenerator.createRandomInteger(AngebotGenerator.BINDUNG_BASE, AngebotGenerator.BINDUNG_VARIANCE);
             angebot.betrag = AngebotGenerator.createRandomInteger(AngebotGenerator.BETRAG_BASE, AngebotGenerator.BETRAG_VARIANCE) * 1000;
+            angebot.bezeichner = Bezeichner[Math.floor(Bezeichner.length)];
             return  angebot;
         }
 
