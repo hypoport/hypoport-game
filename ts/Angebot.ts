@@ -10,13 +10,18 @@ module hypoport.game {
         public bindung:number;
         public betrag:number;
         public machbarkeit:Machbarkeit;
+
+        public zinsString() {
+            var zs = Math.round(this.zins * 100).toString();
+            return zs.slice(0, -2) + "," + zs.slice(-2);
+        }
     }
 
     export class AngebotGenerator {
         static ZINS_BASE = 200;
         static ZINS_VARIANCE = 200;
         static BINDUNG_BASE = 15;
-        static  BINDUNG_VARIANCE = 15;
+        static  BINDUNG_VARIANCE = 5;
         static BETRAG_BASE = 100;
         static  BETRAG_VARIANCE = 40;
 
