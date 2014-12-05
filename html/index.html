@@ -10,6 +10,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/phaser.min.js"></script>
   <script src="js/angebote.js"></script>
+  <script src="js/Angebot.js"></script>
   <script src="js/dropzone.js"></script>
 
 </head>
@@ -19,40 +20,49 @@
   <script type="text/javascript">
     window.onload = function() {
        
-      window.game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+      window.game = new Phaser.Game(800, 800, Phaser.AUTO, '', {
         preload: preload,
         create: create,
         update: update
       });
 
-      var angeboteGroup;
+      var angeboteSprites;
+      var dropZoneGroup;
 
       function preload() {
-        game.load.image('logo', 'phaser.png');
         game.load.image('angebot_bg', 'img/angebot_bg.png');
         game.load.image('dropzone_bg', 'img/barrier_bg.png');
       }
 
       function create() {
+        var generator = new hypoport.game.AngebotGenerator()
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        angeboteGroup = game.add.group();
-        for (var i = 0; i < konditionen.length; i++) {
-          var angebot = AngebotSprite.create(40, 40 + i * 80, konditionen[i]);
-          AngebotSprite.addPhysicsToAngebot(angebot);
+        angeboteSprites = game.add.group();
+        
+        for (var i = 0; i < 5; i++) {
+          var kondition = generator.createRandomAngebot();
+          var angebot = AngebotSprite.create(40, 40 + i * 80, kondition);
+          AngebotSprite.addPhysics(angebot);
           AngebotSprite.addFadeOut(angebot);
-          angeboteGroup.add(angebot);
+          angeboteSprites.add(angebot);
         }
         
         dropZoneGroup = game.add.group();
-        dropZoneGroup.add(DropZone.createDropZone(0,game.world.height-4*80-10));
+        var dropZone= DropZone.create(0,game.world.height-4*70-10);
+        DropZone.addPhysics(dropZone);        
+        dropZoneGroup.add(dropZone);
       }
 
       function update() {
-        game.physics.arcade.collide(angeboteGroup, angeboteGroup);
-        game.physics.arcade.collide(angeboteGroup, dropZoneGroup);
+        game.physics.arcade.collide(angeboteSprites, angeboteSprites);
+        // game.physics.arcade.collide(angeboteSprites, dropZoneGroup);
+        
+        game.physics.arcade.overlap(angeboteSprites, dropZoneGroup, DropZone.onOverlap, null, this);
+
       }
     };
+    
   </script>
 
 </body>
