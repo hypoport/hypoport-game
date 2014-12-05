@@ -51,7 +51,7 @@ module hypoport.game {
         }
 
         public doRemove(angebot:Angebot) {
-            this.doRemoveAt(indexOf.call(this, angebot));
+            this.doRemoveAt(this.indexOf.call(this, angebot));
         }
 
         public doRemoveAt(index:number) {
