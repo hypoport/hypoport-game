@@ -13,8 +13,29 @@
 <script type="text/javascript">
   var gameLogic = new hypoport.game.GameLogic();
   var stackElement = document.querySelector('.stack');
-  gameLogic.onAngebotAdded(function (angebot, index) {
+
+  function createBox(angebot, game) {
     const element = document.createElement('div');
+    const status = document.createElement('div');
+    status.classList.add("status");
+    status.classList.add(hypoport.game.Machbarkeit[angebot.machbarkeit]);
+    const zins = document.createElement("label");
+    zins.title = "Zins";
+    zins.textContent = angebot.zinsString() + "%";
+    const laufzeit = document.createElement("label");
+    laufzeit.title = "Laufzeit";
+    laufzeit.textContent = angebot.bindung + "Jahre";
+    element.appendChild(status);
+    element.appendChild(zins);
+    element.appendChild(laufzeit);
+    element.onmousedown = function () {
+      game.doRemove(angebot);
+    };
+    return element;
+  }
+
+  gameLogic.onAngebotAdded(function (angebot, index) {
+    var element = createBox(angebot, this);
     element.classList.add("box");
     angebot.element = element;
     stackElement.insertBefore(element, stackElement.children[0]);

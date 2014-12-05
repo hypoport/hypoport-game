@@ -53,10 +53,10 @@ module hypoport.game {
         }
 
         public doRemoveAt(index:number) {
-            var angebot = this.stack[4];
-            this.stack.splice(4, 1);
+            var angebot = this.stack[index];
+            this.stack.splice(index, 1);
             this.angebotRemoved.forEach((handler) => {
-                handler.call(this, angebot, this.stack.length - 1);
+                handler.call(this, angebot, index);
             });
         }
 
