@@ -16,7 +16,7 @@ module hypoport.game {
             return zs.slice(0, -2) + "," + zs.slice(-2);
         }
 
-        public score():number {
+        get score():number {
             var machbarFaktor:number;
             if (this.machbarkeit === Machbarkeit.gelb) {machbarFaktor = .75;}
             else if (this.machbarkeit === Machbarkeit.rot) {machbarFaktor = .6;}
