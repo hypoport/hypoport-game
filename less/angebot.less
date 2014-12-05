@@ -52,8 +52,22 @@ label {
   }
 }
 
+html {
+  background: whitesmoke;
+}
+
 .game {
+  position: fixed;
+  border: 4px solid #555;
+  border-radius: 10px;
   background: black;
+  height: 700px;
+  width: 480px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   > .stack {
     display: inline-block;
@@ -145,24 +159,11 @@ label {
 
   }
   > .score {
-    position: fixed;
+    position: absolute;
     box-sizing: content-box;
 
     left: @box-width + 40px;
-    top: 336px;
-
-    &.final {
-      top: 50vh;
-      left: 50vw;
-      height: 60px;
-      width: 160px;
-      line-height: 60px;
-      font-size: 48px;
-
-      transition: .2s linear;
-    }
-
-    //      margin: auto;
+    top: 330px;
 
     height: 30px;
     width: 80px;
@@ -175,7 +176,18 @@ label {
     line-height: 30px;
     vertical-align: middle;
     text-align: center;
-    font-size: 14px;
+    font-size: 24px;
+
+    &.final {
+      top: 160px;
+      left: @box-width / 2 - 84px;
+      height: 60px;
+      width: 160px;
+      line-height: 60px;
+      font-size: 48px;
+
+      transition: .2s linear;
+    }
   }
 }
 
