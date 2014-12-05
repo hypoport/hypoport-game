@@ -26,7 +26,6 @@ module hypoport.game {
                     this.angebotAdded.forEach((handler)=> {
                         handler.call(this, angebot, this.stack.length - 1);
                     });
-                    this.forceRemove = true;
                 }
                 else {
                     window.clearInterval(this.gameLoop);
