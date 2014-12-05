@@ -24,14 +24,14 @@ module hypoport.game {
                     }
                     var angebot = this.generator.createRandomAngebot();
                     this.stack.push(angebot);
-                    this.angebotAdded.forEach(function (handler) {
+                    this.angebotAdded.forEach((handler)=> {
                         handler.call(this, angebot, this.stack.length - 1);
                     });
                     forceRemove = true;
                 }
                 else {
                     window.clearInterval(this.gameLoop);
-                    this.gameFinished.forEach(function (handler) {
+                    this.gameFinished.forEach((handler) => {
                         handler.call(this);
                     })
                 }
@@ -57,7 +57,7 @@ module hypoport.game {
         public doRemove(index:number) {
             var angebot = this.stack[4];
             this.stack.splice(4, 1);
-            this.angebotRemoved.forEach(function (handler) {
+            this.angebotRemoved.forEach((handler) => {
                 handler.call(this, angebot, this.stack.length - 1);
             });
         }
