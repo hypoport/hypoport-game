@@ -50,6 +50,11 @@
     removeBox(angebot.element);
     console.log(this);
   });
+  gameLogic.onGameFinished(function () {
+    const score = document.createElement('div');
+    score.textContent = this.score;
+    document.body.appendChild(score);
+  });
   gameLogic.startEventLoop();
 </script>
 </body>
