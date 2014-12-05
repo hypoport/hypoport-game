@@ -1,74 +1,55 @@
-/*
-var konditionen = [{
-  typ: "Annuitätendarlehen",
-  zins: 1.3,
-  zinsBindung: 10,
-  betrag: 100000,
-  machbarkeit: 1
-}, {
-  typ: "Ratenkredit",
-  zins: 2.3,
-  zinsBindung: 15,
-  betrag: 200000,
-  machbarkeit: 2
-}, {
-  typ: "KfW 124",
-  zins: 3.3,
-  zinsBindung: 15,
-  betrag: 200000,
-  machbarkeit: 2
-}]
-*/
-
 var AngebotSprite = {
   create: function(x, y, kondition) {
     var angebot = game.add.sprite(x, y, 'angebot_bg');
 
-/*
-    var typ = game.add.text(10, 2, kondition.typ, {
-      font: '10pt Tahoma',
+    var bezeichner = game.add.text(250, 20, kondition.bezeichner, {
+      font: 'bold 16pt Tahoma',
       fill: '#2345CD'
-    });
-    angebot.addChild(typ);
-*/ 
+    }); 
+    bezeichner.anchor.setTo(0.5, 0.5);
+    angebot.addChild(bezeichner);
+  
+    var machbarkeit = game.add.sprite(30, 20, 'led_' + hypoport.game.Machbarkeit[kondition.machbarkeit]);
+    machbarkeit.anchor.setTo(0.5, 0.5);
+    angebot.addChild(machbarkeit);
 
-    var betrag  = game.add.text(250, 50, kondition.betrag + " €", {
+    var betrag = game.add.text(250, 52, kondition.betrag + " €", {
       font: '12pt Arial',
       fill: '#000'
     });
     betrag.anchor.setTo(0.5, 0.5)
     angebot.addChild(betrag);
-    
 
-    var zins  = game.add.text(50, 70, "Zins: " + kondition.zinsString(), {
+    var zins = game.add.text(120, 77, "Zins: " + kondition.zinsString(), {
       font: '12pt Tahoma',
       fill: '#000'
     });
+    zins.anchor.setTo(0.5, 0.5)
     angebot.addChild(zins);
 
-    var zinsBindung  = game.add.text(350, 70, kondition.bindung + " Jahre", {
+    var zinsBindung = game.add.text(370, 77, kondition.bindung + " Jahre", {
       font: '12pt Tahoma',
       fill: '#000'
     });
+    zinsBindung.anchor.setTo(0.5, 0.5)
     angebot.addChild(zinsBindung);
-
 
     return angebot;
   },
 
   addPhysics: function(angebot) {
     game.physics.arcade.enable(angebot);
-    angebot.body.bounce.y = 0.7
+    angebot.body.bounce.y = 0.1;
     angebot.body.gravity.y = 600;
     angebot.body.collideWorldBounds = true;
   },
 
   addFadeOut: function(angebot) {
     angebot.inputEnabled = true;
-    angebot.input.useHandCursor = true; //if you want a hand cursor
+    angebot.input.useHandCursor = true;
     angebot.events.onInputDown.add(AngebotSprite.fadeOut, this);
   },
-  
+
   fadeOut: function(angebot, event) {
     angebot.body.collideWorldBounds = false;
     angebot.checkWorldBounds = true;
