@@ -10,6 +10,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/phaser.min.js"></script>
   <script src="js/angebote.js"></script>
+  <script src="js/dropzone.js"></script>
 
 </head>
 
@@ -17,7 +18,7 @@
 
   <script type="text/javascript">
     window.onload = function() {
-      
+       
       window.game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
         preload: preload,
         create: create,
@@ -29,22 +30,27 @@
       function preload() {
         game.load.image('logo', 'phaser.png');
         game.load.image('angebot_bg', 'img/angebot_bg.png');
+        game.load.image('dropzone_bg', 'img/barrier_bg.png');
       }
 
       function create() {
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         angeboteGroup = game.add.group();
-        for (var i = 0; i < angebote.length; i++) {
-          var angebot = Angebote.createAngebot(40, 40 + i * 80, "Zins:" + angebote[i].zins);
-          Angebote.addPhysicsToAngebot(angebot);
-          Angebote.addFadeOut(angebot);
+        for (var i = 0; i < konditionen.length; i++) {
+          var angebot = AngebotSprite.create(40, 40 + i * 80, konditionen[i]);
+          AngebotSprite.addPhysicsToAngebot(angebot);
+          AngebotSprite.addFadeOut(angebot);
           angeboteGroup.add(angebot);
         }
+        
+        dropZoneGroup = game.add.group();
+        dropZoneGroup.add(DropZone.createDropZone(0,game.world.height-4*80-10));
       }
 
       function update() {
         game.physics.arcade.collide(angeboteGroup, angeboteGroup);
+        game.physics.arcade.collide(angeboteGroup, dropZoneGroup);
       }
     };
   </script>
