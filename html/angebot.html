@@ -6,6 +6,10 @@
   <script type="text/javascript" src="js/Angebot.js"></script>
   <script type="text/javascript" src="js/GameLogic.js"></script>
   <script type="text/javascript">
+    const gameLogic = new hypoport.game.GameLogic();
+    gameLogic.angebotAdded(function (angebot, index) {
+      
+    });
     function removeBox(box) {
       box.classList.toggle('remove');
       setTimeout(function () {

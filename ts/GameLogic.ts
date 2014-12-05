@@ -20,18 +20,18 @@ module hypoport.game {
                 if (this.counter < GameLogic.MAX_ITERATIONS) {
                     ++this.counter;
                     if (forceRemove && this.stack.length > 4) {
-                        this.doRemove(4)
+                        this.doRemoveAt(4);
                     }
                     var angebot = this.generator.createRandomAngebot();
                     this.stack.push(angebot);
-                    this.angebotAdded.forEach(function (handler) {
+                    this.angebotAdded.forEach((handler)=> {
                         handler.call(this, angebot, this.stack.length - 1);
                     });
                     forceRemove = true;
                 }
                 else {
                     window.clearInterval(this.gameLoop);
-                    this.gameFinished.forEach(function (handler) {
+                    this.gameFinished.forEach((handler) => {
                         handler.call(this);
                     })
                 }
@@ -51,13 +51,13 @@ module hypoport.game {
         }
 
         public doRemove(angebot:Angebot) {
-            this.doRemove(indexOf.call(this, angebot));
+            this.doRemoveAt(indexOf.call(this, angebot));
         }
 
-        public doRemove(index:number) {
+        public doRemoveAt(index:number) {
             var angebot = this.stack[4];
             this.stack.splice(4, 1);
-            this.angebotRemoved.forEach(function (handler) {
+            this.angebotRemoved.forEach((handler) => {
                 handler.call(this, angebot, this.stack.length - 1);
             });
         }
