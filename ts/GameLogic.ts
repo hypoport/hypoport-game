@@ -8,7 +8,6 @@ module hypoport.game {
         gameFinished = [];
         updated = [];
         counter:number = 0;
-
         gameLoop;
 
         public constructor() {
@@ -30,6 +29,7 @@ module hypoport.game {
                 }
                 else {
                     window.clearInterval(this.gameLoop);
+                    this.gameLoop = undefined;
                     this.gameFinished.forEach((handler) => {
                         handler.call(this);
                     })
@@ -66,10 +66,17 @@ module hypoport.game {
             this.angebotRemoved.forEach((handler) => {
                 handler.call(this, angebot, index);
             });
+            this.updated.forEach((handler) => {
+                handler.call(this);
+            })
         }
 
         public indexOf(angebot) {
             return this.stack.indexOf(angebot);
+        }
+
+        public get running():boolean {
+            return !!this.gameLoop;
         }
 
         public get score():number {

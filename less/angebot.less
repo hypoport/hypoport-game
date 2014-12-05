@@ -4,8 +4,10 @@
   box-sizing: border-box;
 }
 
-@box-size: 50px;
-@box-spacing: 6px;
+@border-width: 4px;
+@box-height: 56px;
+@box-width: 450px;
+@box-spacing: 20px;
 
 body {
   display: inline-block;
@@ -17,7 +19,7 @@ body {
 
 label {
   display: inline-block;
-  border: 4px solid gray;
+  border: @border-width solid gray;
   background: whitesmoke;
   padding: 2px 8px;
   border-radius: 8px;
@@ -32,14 +34,14 @@ label {
   display: inline-block;
   height: 20px;
   width: 20px;
-  border: solid 4px;
+  border: solid @border-width;
   &.rot {
     border-radius: 10px;
     border-color: darkred;
     background: red
   }
   &.gruen {
-    border-radius: 4px;
+    border-radius: @border-width;
     border-color: darkgreen;
     background: limegreen;
   }
@@ -50,77 +52,135 @@ label {
   }
 }
 
-.stack {
-  display: inline-block;
-  position: relative;
-  text-indent: 0;
-  padding: 0;
-  margin: 350px 0 0 0;
-  list-style: none;
-  height: 4*@box-size + 5*@box-spacing;
-  box-sizing: content-box;
-  width: 416px;
-  border-top: 4px dashed #555;
-//  border-radius: 2*@box-spacing;
+.game {
+  background: black;
 
-  > .box {
-    left: 12px;
-    opacity: 0;
+  > .stack {
+    display: inline-block;
+    position: relative;
+    text-indent: 0;
+    padding: 0;
+    margin: 350px 0 0 0;
+    list-style: none;
+    height: 4*@box-height + 5*@box-spacing;
+    box-sizing: content-box;
+    width: @box-width + 26px;
+    border-top: @border-width dashed #555;
+    //  border-radius: 2*@box-spacing;
 
-    position: absolute;
-    display: block;
+    > .box {
+      left: 12px;
+      opacity: 0;
 
-    height: @box-size;
-    width: 390px;
+      position: absolute;
+      display: block;
 
-    text-align: center;
-    transition: top 0.2s ease-out;
-    border: 4px solid steelblue;
-    border-radius: 8px;
-    padding: 4px 16px;
-    background: lightsteelblue;
+      height: @box-height;
+      width: @box-width;
 
+      text-align: center;
+      transition: top 0.2s ease-out;
+      border: @border-width solid steelblue;
+      border-radius: 8px;
+      padding: 4px 16px;
+      background: lightsteelblue;
 
-    > * {
-      margin: auto 2px;
-      vertical-align: middle;
-      line-height: 22px;
-      font-size: 15px;
-    }
-    &.remove {
-      left: 150%;
-      opacity: 0 !important;
-      border-color: lightgoldenrodyellow;
-      background-color: black;
-      transition: background-color .3s cubic-bezier(.62, .08, .84, .62),
-      border-color .1s cubic-bezier(.62, .08, .84, .62),
-      left .3s cubic-bezier(.62, .08, .84, .62),
-      top .2s ease-out, opacity .2s ease-out .1s !important;
-    }
-    &:nth-last-child(6) {
-      top: -300px;
-    }
-    &:nth-last-child(5) {
-      opacity: 1;
-      top: -@box-size - @box-spacing - 4px;
-      transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
-    }
-    &:nth-last-child(4) {
-      opacity: 1;
-      top: @box-spacing;
-    }
-    &:nth-last-child(3) {
-      opacity: 1;
-      top: @box-size + 2*@box-spacing;
-    }
-    &:nth-last-child(2) {
-      opacity: 1;
-      top: 2*@box-size + 3*@box-spacing;
-    }
-    &:nth-last-child(1) {
-      opacity: 1;
-      top: 3*@box-size + 4*@box-spacing;
+      > * {
+        margin: auto 2px;
+        vertical-align: top;
+        line-height: 22px;
+        font-size: 15px;
+
+      }
+      > h2 {
+        border-bottom: 2px solid #dae5f2;
+        margin-bottom: 4px;
+      }
+      > .status {
+        position: absolute;
+        top: 4px;
+        left: 16px;
+      }
+      &.remove > label,
+      &.remove {
+        left: 150%;
+        opacity: 0 !important;
+        border-color: lightgoldenrodyellow;
+        background-color: black;
+        transition: background-color .3s cubic-bezier(.62, .08, .84, .62),
+        border-color .1s cubic-bezier(.62, .08, .84, .62),
+        left .3s cubic-bezier(.62, .08, .84, .62),
+        top .2s ease-out, opacity .2s ease-out .1s !important;
+      }
+      &:nth-last-child(6) {
+        top: -300px;
+      }
+      &:nth-last-child(5) {
+        opacity: 1;
+        top: -@box-height - @box-spacing - @border-width;
+        transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
+      }
+      &:nth-last-child(4) {
+        opacity: 1;
+        top: @box-spacing;
+      }
+      &:nth-last-child(3) {
+        opacity: 1;
+        top: @box-height + 2*@box-spacing;
+      }
+      &:nth-last-child(2) {
+        opacity: 1;
+        top: 2*@box-height + 3*@box-spacing;
+      }
+      &:nth-last-child(1) {
+        opacity: 1;
+        top: 3*@box-height + 4*@box-spacing;
+      }
     }
 
   }
+  > .score {
+    position: fixed;
+    box-sizing: content-box;
+
+    left: @box-width + 40px;
+    top: 300px;
+
+    &.final {
+      top: 50vh;
+      left: 50vw;
+      height: 60px;
+      width: 160px;
+      line-height: 60px;
+      font-size: 48px;
+
+      transition: left .4s linear, top .4s linear, right .4s linear, bottom .4s linear, margin .4s linear, width .4s linear, height .4s linear, line-height .4s linear, font-size .4s linear;
+    }
+
+    //      margin: auto;
+
+    height: 30px;
+    width: 80px;
+
+
+    border: @border-width solid #555;
+    border-radius: @border-width;
+    background: whitesmoke;
+    padding: 4px;
+
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+.glass {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: lightyellow;
+  opacity: .6;
 }

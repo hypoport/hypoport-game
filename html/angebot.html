@@ -1,33 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
+  <meta charset="UTF-8">
   <style>
   </style>
   <script type="text/javascript" src="js/Angebot.js"></script>
   <script type="text/javascript" src="js/GameLogic.js"></script>
   <link rel="stylesheet" href="css/angebot.css">
 </head>
-<body style="background: black">
+<body class="game">
 <div class="stack">
 </div>
+<div class="score">0</div>
 <script type="text/javascript">
   var gameLogic = new hypoport.game.GameLogic();
   var stackElement = document.querySelector('.stack');
+  var scoreBox = document.querySelector('.score');
 
   function createBox(angebot, game) {
     const element = document.createElement('div');
+
+    function createLabeled(title, content) {
+      const label = document.createElement("label");
+      label.title = title;
+      label.textContent = content;
+      return label;
+    }
+
     const status = document.createElement('div');
     status.classList.add("status");
     status.classList.add(hypoport.game.Machbarkeit[angebot.machbarkeit]);
-    const zins = document.createElement("label");
-    zins.title = "Zins";
-    zins.textContent = angebot.zinsString() + "%";
-    const laufzeit = document.createElement("label");
-    laufzeit.title = "Laufzeit";
-    laufzeit.textContent = angebot.bindung + "Jahre";
+
+    const bezeichner = document.createElement('h2');
+    bezeichner.textContent = angebot.bezeichner;
+
+    element.appendChild(bezeichner);
     element.appendChild(status);
-    element.appendChild(zins);
-    element.appendChild(laufzeit);
+    element.appendChild(createLabeled("Zins", angebot.zinsString() + "%"));
+    element.appendChild(createLabeled("Laufzeit", angebot.bindung + "Jahre"));
+    element.appendChild(createLabeled("Betrag", angebot.betrag + "€"));
     element.onmousedown = function () {
       game.doRemove(angebot);
     };
@@ -40,20 +51,21 @@
     angebot.element = element;
     stackElement.insertBefore(element, stackElement.children[0]);
   });
-  function removeBox(box) {
-    box.classList.toggle('remove');
-    setTimeout(function () {
-      box.parentNode.removeChild(box)
-    }, 300)
-  }
   gameLogic.onAngebotRemoved(function (angebot, index) {
-    removeBox(angebot.element);
-    console.log(this);
+    angebot.element.classList.toggle('remove');
+    angebot.element.onmousedown = null;
+    setTimeout(function () {
+      angebot.element.parentNode.removeChild(angebot.element)
+    }, 300)
   });
+  gameLogic.onUpdated(function () {
+    console.log("update: " + this.score);
+    scoreBox.textContent = this.score;
+  });
+
   gameLogic.onGameFinished(function () {
-    const score = document.createElement('div');
-    score.textContent = this.score;
-    document.body.appendChild(score);
+    scoreBox.classList.add("final");
+    scoreBox.parentElement.insertBefore(document.createElement('div'), scoreBox).classList.add("glass");
   });
   gameLogic.startEventLoop();
 </script>
