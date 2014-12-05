@@ -2,130 +2,6 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      display: inline-block;
-      height: 400px;
-      vertical-align: bottom;
-    }
-
-    .box {
-      position: relative;
-      left: 0;
-      height: 50px;
-      opacity: 1;
-      display: block;
-      border: 4px solid steelblue;
-      border-radius: 8px;
-      padding: 4px 16px;
-      background: lightsteelblue;
-      margin: 8px;
-    }
-
-    .box > * {
-      margin-left: 4px;
-      vertical-align: middle;
-    }
-
-    label:before {
-      content: attr(title) ":";
-      margin-right: 8px;
-      color: gray;
-    }
-
-    label {
-      display: inline-block;
-      border: 4px solid gray;
-      background: whitesmoke;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
-
-    .status {
-      display: inline-block;
-      height: 20px;
-      width: 20px;
-      border: solid 4px;
-    }
-
-    .status.rot {
-      border-radius: 10px;
-      border-color: darkred;
-      background: red
-    }
-
-    .status.gruen {
-      border-radius: 4px;
-      border-color: darkgreen;
-      background: limegreen;
-    }
-
-    .status.gelb {
-      border-radius: 10px 10px 0 0;
-      border-color: darkgoldenrod;
-      background: yellow;
-    }
-
-    .stack {
-      display: inline-block;
-      position: relative;
-      text-indent: 0;
-      border: 1px solid white;
-      padding: 0;
-      margin: 350px 0 0 0;
-      list-style: none;
-      height: 240px;
-      box-sizing: content-box;
-      width: 416px;
-    }
-
-    .stack > * {
-      display: block;
-      opacity: 0;
-      position: absolute;
-      width: 390px;
-      text-align: center;
-      transition: top 0.2s ease-out;
-    }
-
-    .stack > .remove {
-      left: 150%;
-      opacity: 0 !important;
-      transition: left .3s cubic-bezier(.62, .08, .84, .62), top .2s ease-out, opacity .2s ease-out .1s !important;
-    }
-
-    .stack > :nth-last-child(6) {
-      top: -300px;
-    }
-
-    .stack > :nth-last-child(5) {
-      opacity: 1;
-      top: -68px;
-      transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
-    }
-
-    .stack > :nth-last-child(4) {
-      opacity: 1;
-      top: -0px;
-    }
-
-    .stack > :nth-last-child(3) {
-      opacity: 1;
-      top: 58px;
-    }
-
-    .stack > :nth-last-child(2) {
-      opacity: 1;
-      top: 116px;
-    }
-
-    .stack > :nth-last-child(1) {
-      opacity: 1;
-      top: 174px;
-    }
   </style>
   <script type="text/javascript">
     function removeBox(box) {
@@ -135,6 +11,7 @@
       }, 300)
     }
   </script>
+  <link rel="stylesheet" href="css/angebot.css">
 </head>
 <body style="background: black">
 <div class="stack">
