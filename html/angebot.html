@@ -51,8 +51,8 @@
     angebot.element = element;
     element.classList.add("new");
     setTimeout(function () {
-      element.classList.remove("new");
       element.classList.add("dropping");
+      element.classList.remove("new");
       setTimeout(function () {
         element.classList.remove("dropping");
       },800);

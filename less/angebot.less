@@ -84,7 +84,7 @@ html {
 
     > .box {
       left: 12px;
-      opacity: 0;
+      opacity: 1;
 
       position: absolute;
       display: block;
@@ -112,30 +112,23 @@ html {
         top .2s ease-out, opacity .2s ease-out .1s !important;
       }
       &.new {
+        top: -360px !important;
         opacity: 0 !important;
-        top: -300px !important;
       }
       &.dropping {
-        transition: top 0.8s ease-out .1s, opacity .2s ease-out .1s;
+        transition: top 0.9s ease-out .1s, opacity .2s ease-out .1s;
       }
-      &:nth-last-child(5) {
-        opacity: 1;
-        top: -@box-height - @box-spacing - @border-width;
-      }
+      top: -@box-height - @box-spacing - @border-width;
       &:nth-last-child(4) {
-        opacity: 1;
         top: @box-spacing;
       }
       &:nth-last-child(3) {
-        opacity: 1;
         top: @box-height + 2*@box-spacing;
       }
       &:nth-last-child(2) {
-        opacity: 1;
         top: 2*@box-height + 3*@box-spacing;
       }
       &:nth-last-child(1) {
-        opacity: 1;
         top: 3*@box-height + 4*@box-spacing;
       }
 
