@@ -11,6 +11,7 @@
   <script src="js/phaser.min.js"></script>
   <script src="js/angebote.js"></script>
   <script src="js/Angebot.js"></script>
+  <script src="js/GameLogic.js"></script>
   <script src="js/dropzone.js"></script>
 
 </head>
@@ -19,7 +20,7 @@
 
   <script type="text/javascript">
     window.onload = function() {
-       
+
       window.game = new Phaser.Game(800, 800, Phaser.AUTO, '', {
         preload: preload,
         create: create,
@@ -28,41 +29,55 @@
 
       var angeboteSprites;
       var dropZoneGroup;
+      var generator;
+      var gameLogic;
+
+      var aktuelleAngebote = [];
 
       function preload() {
         game.load.image('angebot_bg', 'img/angebot_bg.png');
         game.load.image('dropzone_bg', 'img/barrier_bg.png');
+
+        game.load.image('led_rot', 'img/red.png');
+        game.load.image('led_gruen', 'img/green.png');
+        game.load.image('led_gelb', 'img/yellow.png');
+
       }
 
       function create() {
-        var generator = new hypoport.game.AngebotGenerator()
+        gameLogic = new hypoport.game.GameLogic();
+        gameLogic.onAngebotAdded(onAngebotGenerated);
+        gameLogic.onAngebotRemoved(onAngebotRemoved);
+        gameLogic.startEventLoop();
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         angeboteSprites = game.add.group();
-        
-        for (var i = 0; i < 5; i++) {
-          var kondition = generator.createRandomAngebot();
-          var angebot = AngebotSprite.create(40, 40 + i * 80, kondition);
-          AngebotSprite.addPhysics(angebot);
-          AngebotSprite.addFadeOut(angebot);
-          angeboteSprites.add(angebot);
-        }
-        
-        dropZoneGroup = game.add.group();
-        var dropZone= DropZone.create(0,game.world.height-4*70-10);
-        DropZone.addPhysics(dropZone);        
-        dropZoneGroup.add(dropZone);
+
+        var dropZone = DropZone.create(0, game.world.height - 4 * 110);
       }
 
       function update() {
         game.physics.arcade.collide(angeboteSprites, angeboteSprites);
-        // game.physics.arcade.collide(angeboteSprites, dropZoneGroup);
-        
         game.physics.arcade.overlap(angeboteSprites, dropZoneGroup, DropZone.onOverlap, null, this);
+      }
 
+      function onAngebotGenerated(angebot, index) {
+        angebot.sprite = AngebotSprite.create(40, 40, angebot);
+        AngebotSprite.addPhysics(angebot.sprite);
+        AngebotSprite.addFadeOut(angebot.sprite);
+        
+        angebot.sprite.events.onInputDown.add(function() {
+          gameLogic.doRemove(angebot);
+        }, this);
+        
+        angeboteSprites.add(angebot.sprite);
+      }
+      
+      function onAngebotRemoved(kondition, index) {
+        angebot = kondition.sprite;
+        AngebotSprite.fadeOut(angebot);
       }
     };
-    
   </script>
 
 </body>
