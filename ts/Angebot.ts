@@ -15,6 +15,15 @@ module hypoport.game {
             var zs = Math.round(this.zins * 100).toString();
             return zs.slice(0, -2) + "," + zs.slice(-2);
         }
+
+        public score():number {
+            var machbarFaktor:number;
+            if (this.machbarkeit === Machbarkeit.gelb) {machbarFaktor = .75;}
+            else if (this.machbarkeit === Machbarkeit.rot) {machbarFaktor = .6;}
+            else {machbarFaktor = 1;}
+
+            return Math.floor(this.bindung / (10 * this.zins) * this.betrag * machbarFaktor);
+        }
     }
 
     export class AngebotGenerator {
